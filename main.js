@@ -1,6 +1,6 @@
 const inputText = document.querySelector('.inputField input');
 const addBtn = document.querySelector('.inputField button');
-const listTasks = document.querySelector('.list-Tasks')
+const listTasks = document.querySelector('.list-tasks')
 const clearAll = document.querySelector('.footer button')
 
 
@@ -52,9 +52,23 @@ showTasks = () =>{
     listArray.forEach((element,index) => {
         newTask += `<li> ${element} <span class='icon' onclick='deleteTask(${index})'><i class="fas fa-trash"></i></span></li>`
     });
+    console.log(listTasks);
     listTasks.innerHTML = newTask;
     inputText.value = '';
 }
 
+function deleteTask(index) {
+    let getLocalStorage = localStorage.getItem('New Task');
+    listArray = JSON.parse(getLocalStorage);
+    listArray.splice(index, 1);     //splice xoa,them phan tu mang
+    localStorage.setItem('New Task', JSON.stringify(listArray));
+    showTasks();
+}
+
+clearAll.onclick = () => {
+    listArray = [];
+    localStorage.setItem('New Task', JSON.stringify(listArray));
+    showTasks();
+}
 
  
